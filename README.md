@@ -3,10 +3,8 @@ This script is designed to monitor any telegram group and send alerts to phone n
 messages as per threshold and after that reloads page for new messages and again same process.
 
 Pre Requisites : 
-1. Install chromedriver and change path in input params below 
-2. Twilio create free trial account- which will give you $15 equivalent to 1500 free text alerts (if reached limit create another free trial account)
-   Pass account_sid, auth_token and phone numbers below (follow more info here https://www.geeksforgeeks.org/python-send-sms-using-twilio/)
-3. Enter partial keyword/name of the group you want to monitor below
+1. Install chromedriver
+2. Twilio create free trial account- which will give you $15 equivalent to 1500 free text alerts (if reached limit create another free trial account) (follow more info here https://www.geeksforgeeks.org/python-send-sms-using-twilio/)
 
 Run the script via  python monitorTelegramGroup.py (script will run forever - on Mac I was able to let this script
 run in sleep mode not sure about windows)
