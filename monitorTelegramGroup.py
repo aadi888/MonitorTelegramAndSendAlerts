@@ -100,16 +100,19 @@ combine_msgs = 0
 combine_msgs_list = []
 
 wait = WebDriverWait(driver, 100)
-wait.until(EC.presence_of_element_located((By.XPATH, "//*[contains(text(),'H1')]")))
-time.sleep(30)
+wait.until(EC.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + group_partial_name_keyword + "')]")))
+time.sleep(10)
 reload()
 count_for_reload = 0
-threshold = 3
+count_for_dead_loop = 0
+threshold = 10
 while True:
     time.sleep(5)
-    if count_for_reload > threshold:
+    count_for_dead_loop = count_for_dead_loop + 1
+    if count_for_reload > threshold or count_for_dead_loop > threshold:
         reload()
         count_for_reload = 0
+        count_for_dead_loop = 0
 
     try:
         driver.find_element_by_xpath("//button[@title='Go to bottom']").click()
@@ -117,19 +120,23 @@ while True:
     except:
         pass
 
-    current_msgs = driver.find_elements_by_class_name("Message")
-    if len(current_msgs) == 0:
-        is_bubbles = False
-        current_msgs = driver.find_elements_by_class_name("bubble")
-        if len(current_msgs) > 5:
-            is_bubbles = True
-
-    current_msgs_count = len(current_msgs)
-    #print("additional check " + str(current_msgs_count))
+    try:
+        current_msgs = driver.find_elements_by_class_name("Message")
+        if len(current_msgs) == 0:
+            is_bubbles = False
+            current_msgs = driver.find_elements_by_class_name("bubble")
+            if len(current_msgs) > 5:
+                is_bubbles = True
+        current_msgs_count = len(current_msgs)
+        #print("additional check " + str(current_msgs_count))
+    except:
+        reload()
+        continue
 
     if current_msgs_count != previous_msgs_count and previous_msgs_count != 0 and current_msgs_count > previous_msgs_count and (current_msgs_count - previous_msgs_count) < 15:
         difference = current_msgs_count - previous_msgs_count
         count_for_reload = count_for_reload + difference
+        count_for_dead_loop = 0
 
         print("*** New msgs found " + str(difference))
         difference_msgs = current_msgs[-difference:]
