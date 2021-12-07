@@ -184,7 +184,7 @@ while True:
                 try:
                     print("In Except - probably attachment")
                     #ss_found = msg.find_element_by_xpath("//img[@src][not(contains(@class, 'avatar'))]")
-                    #send_msg("Alert Screenshot found : ")
+                    send_msg("Alert Screenshot found : ")
                     #reload()
                 except:
                     pass
