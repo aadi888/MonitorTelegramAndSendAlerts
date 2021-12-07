@@ -158,7 +158,7 @@ while True:
                 if len(msg_txt) < 9:
                     print("screenshot found")
                     send_msg('Alert Screenshot Found')
-                    reload()
+                    # reload()
                     continue
 
                 if 'na' not in msg_txt_tupples and 'awesomeadmin_us' not in msg_txt_tupples and 'ss' not in msg_txt_tupples and '@awesomeadmin_us' not in msg_txt_tupples and len(msg_txt) > 5:
