@@ -108,7 +108,6 @@ count_for_dead_loop = 0
 threshold = 10
 while True:
     time.sleep(5)
-    count_for_dead_loop = count_for_dead_loop + 1
     if count_for_reload > threshold or count_for_dead_loop > threshold:
         reload()
         count_for_reload = 0
@@ -135,10 +134,10 @@ while True:
 
     if current_msgs_count != previous_msgs_count and previous_msgs_count != 0 and current_msgs_count > previous_msgs_count and (current_msgs_count - previous_msgs_count) < 15:
         difference = current_msgs_count - previous_msgs_count
-        count_for_reload = count_for_reload + difference
+        count_for_reload = count_for_reload + 1
         count_for_dead_loop = 0
 
-        print("*** New msgs found " + str(difference))
+        #print("*** New msgs found " + str(difference))
         difference_msgs = current_msgs[-difference:]
 
         for msg in difference_msgs:
@@ -148,7 +147,7 @@ while True:
                 else:
                     msg_txt = msg.find_element_by_class_name("text-content").text.strip().replace("\n", " ")
 
-                print(msg_txt + "   " + str(len(msg_txt)))
+                print(msg_txt)
                 msg_txt_tupples = msg_txt.split("\n")[0].lower().split(" ")
                 if len(msg_txt) < 9:
                     print("screenshot found")
@@ -184,5 +183,7 @@ while True:
                 except:
                     pass
                 pass
+    else:
+        count_for_dead_loop = count_for_dead_loop + 1
 
     previous_msgs_count = current_msgs_count
