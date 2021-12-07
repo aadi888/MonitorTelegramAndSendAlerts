@@ -79,11 +79,17 @@ def reload():
         #print("clicking ...")
         wait2 = WebDriverWait(driver, 100)
         wait2.until(EC.presence_of_element_located((By.XPATH, "//*[contains(text(),'"+group_partial_name_keyword+"')]")))
-        time.sleep(10)
+        time.sleep(5)
         element = driver.find_element_by_xpath("//*[contains(text(), '"+group_partial_name_keyword+"')]//ancestor::div[contains(@class, 'chatlist-top') or contains(@class, 'ListItem-button')]//div[contains(@class, 'ripple-container') or contains(@class, 'c-ripple')]")
         #print(element)
-        hover = ActionChains(driver).move_to_element(element)
-        hover.click().perform()
+        try:
+            hover = ActionChains(driver).move_to_element(element)
+            hover.click().perform()
+        except:
+            time.sleep(5)
+            hover = ActionChains(driver).move_to_element(element)
+            hover.click().perform()
+            
         # touch_actions = TouchActions(driver)
         # touch_actions.tap(element).perform()
         # element.click()
